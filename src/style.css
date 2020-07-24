@@ -1,0 +1,38 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: "Arial", sans-serif;
+}
+li{
+    list-style: none;
+}
+.inner {
+  display: grid;
+  grid-template-areas: 
+  "hdr hdr"
+  "nv cnt";
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 1fr 5fr;
+  grid-gap: 10px;
+  max-width: 1200px;
+  padding: 0 15px;;
+    margin: 0 auto;
+}
+
+header {
+    grid-area: hdr;
+    background-color: cadetblue;
+}
+header img{
+    width: 30px;
+}
+nav {
+    grid-area: nv;
+    background-color: darkcyan;
+}
+.content {
+    grid-area: cnt;
+    background-color: darkorange;
+}
