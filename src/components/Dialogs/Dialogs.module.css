@@ -1,0 +1,77 @@
+.dialogs {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  padding: 15px;
+  grid-column-gap: 25px;
+  color: var(--main-txt-color);
+}
+.dialogs a {
+  color: var(--main-txt-color);
+  text-decoration: none;
+  display: block;
+  margin: 15px 0;
+  padding: 10px 15px;
+  text-align: center;
+  border: 1px solid var(--hover-color);
+  text-transform: capitalize;
+}
+.dialogItems .active {
+  font-weight: bold;
+  color: var(--hover-color);
+}
+.dialogItems {
+  position: relative;
+}
+.dialogItems:after {
+  content: "";
+  width: 1px;
+  height: 110%;
+  background-color: var(--hover-color);
+  position: absolute;
+  right: -20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.messages {
+  padding: 15px 40px;
+}
+.dialogContent {
+  position: relative;
+}
+.addMessage {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+}
+.addMessage textarea {
+  display: block;
+  padding: 5px;
+  margin: 10px 0;
+  border: 1px solid var(--hover-color);
+  width: 80%;
+  min-height: 62px;
+}
+
+.addMessage button {
+  padding: 10px 15px;
+  border: 1px solid var(--hover-color);
+  background-color: var(--hover-color);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s all ease;
+  font-weight: bold;
+  font-size: 18px;
+  max-height: 40px;
+}
+
+.addMessage button:hover,
+.addMessage button:focus{
+  background-color: transparent;
+  color:var(--main-txt-color);
+}

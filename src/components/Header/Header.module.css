@@ -1,0 +1,43 @@
+header {
+    grid-area: hdr;
+    background-color: var(--secondary-bg-color);
+    padding: 0 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+header:before,
+header:after{
+    content:"";
+    width: 200%;
+    height: 100%;
+    background-color: inherit;
+    position: absolute;
+}
+header:before{
+    left:-200%;
+}
+header:after{
+    right:-200%;
+}
+
+header img{
+    width: 100px;
+    animation-name: spin;
+  
+  transition:.3s all;
+}
+header button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border:1px solid #fff;
+    cursor: pointer;
+    background: linear-gradient(to right,var(--hover-color) 50%, #fff 50%);
+}
+
+header img:hover{
+   width: 110px;
+}

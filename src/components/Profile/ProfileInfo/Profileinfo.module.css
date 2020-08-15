@@ -1,0 +1,7 @@
+.ProfileInfo{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.logo img{
+    width: 225px;
+}

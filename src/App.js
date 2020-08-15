@@ -1,16 +1,42 @@
-import React from 'react';
-import './style.css';
-import Header from './comonents/Header';
-import Nav from './comonents/Nav';
-import Profile from './comonents/profile';
+import React from "react";
+import "./style.css";
+import Header from "./components/Header/HeaderContainer";
+import Nav from "./components/Nav/Nav";
+import Profile from "./components/Profile/Profile";
+import News from "./components/News/News";
+import Music from "./components/Music/Music";
+import Settings from "./components/Settings/Settings";
+import { Route, BrowserRouter } from "react-router-dom";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
-function App() {
+
+function App(props) {
   return (
-    <div className="inner">
-     <Header/>
-     <Nav />
-    <Profile />
-    </div>
+    <BrowserRouter>
+      <div className="inner">
+        <Header />
+        <Nav />
+        <div className="app-content">
+          <Route
+            path="/profile"
+            render={() => <Profile />}
+          />
+          
+          <Route
+            exact
+            path="/dialogs"
+            render={() => (
+              <DialogsContainer />
+            )}
+          />
+          <Route path="/news" component={News} />
+          <Route path="/music" component={Music} />
+          <Route path="/users" component={UsersContainer} />
+          <Route path="/settings" component={Settings} />
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
 

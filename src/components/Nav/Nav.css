@@ -1,0 +1,43 @@
+nav {
+  grid-area: nv;
+  background-color: var(--content-bg);
+  padding: 15px;
+}
+nav a {
+  font-weight: bold;
+  color:var(--main-txt-color);
+  text-decoration: none;
+  text-transform: capitalize;
+  position: relative;
+  transition: 0.3s all;
+}
+
+nav a.active {
+  color:var(--hover-color);
+}
+nav a.active:after{
+    background:var(--hover-color);
+    width: 100%;
+    height: 1px;
+}
+
+nav a:after {
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  background-color:var(--main-txt-color);
+  left: 0;
+  bottom: -5px;
+  transition: 0.3s all;
+}
+nav li:last-child {
+  margin-top: 30px;
+}
+nav a:hover:after {
+  width: 100%;
+  height: 1px;
+}
+nav li {
+  margin-bottom: 10px;
+}
