@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { toggleFollowCreator, setUsersCreator, setCurrentPageCreator, setTotalCountCreator, setLoadingCreator } from "../../redux/usersReducer";
 import Axios from "axios";
 import Users from "./Users";
-import PreloaderContainer from "../preloader/PreloaderContainer"
+import Preloader from "../preloader/Preloader"
 
 class UsersAPIContainer extends React.Component {
   componentDidMount() {
@@ -33,18 +33,18 @@ class UsersAPIContainer extends React.Component {
     let pages = [];
     let current = this.props.currentPage;
 
-    /*making pagintaion in a dumb way*/
+    /*making pagination in a dumb way*/
     pages.push(1);
     if(current > 3){
       pages.push("...");
     }
-    if(current-2 > 0 && current - 2 != 1){
+    if(current-2 > 0 && current - 2 !== 1){
       pages.push(current-2);
     }
-    if(current-1 > 0 &&  current - 1 != 1){
+    if(current-1 > 0 &&  current - 1 !== 1){
       pages.push(current-1);
     }
-    if(current != 1){
+    if(current !== 1){
     pages.push(current);
     }
     if(current+1 && current+1 < pagesCount ){
@@ -53,12 +53,15 @@ class UsersAPIContainer extends React.Component {
     if(current+2 < pagesCount){
       pages.push(current+2 );
       pages.push("...");
+
+    }
+    if (current != pagesCount){
       pages.push(pagesCount);
     }
    
 
     return <>
-    {this.props.isLoading ? <PreloaderContainer /> :  <Users users = {this.props.users} toggleFollow = {this.props.toggleFollow} pages = {pages} currentPage = {this.props.currentPage} onPageChanged = {this.onPageChanged} isLoading = {this.props.isLoading} /> }
+    {this.props.isLoading ? <Preloader /> :  <Users users = {this.props.users} toggleFollow = {this.props.toggleFollow} pages = {pages} currentPage = {this.props.currentPage} onPageChanged = {this.onPageChanged} isLoading = {this.props.isLoading} /> }
    
     </>
   }
@@ -73,23 +76,11 @@ let mapStateToProps = (state) => {
     isLoading: state.usersPage.isLoading
   };
 };
-let mapDispatchToState = (dispatch) => {
-  return {
-    toggleFollow: (userId) => {
-      dispatch(toggleFollowCreator(userId));
-    },
-    setUsers: (users) => {
-      dispatch(setUsersCreator(users));
-    },
-    setPage: (currentPage) => {
-        dispatch(setCurrentPageCreator(currentPage))
-    },
-    setTotalCount:(count) =>{
-        dispatch(setTotalCountCreator(count))
-    },
-    setLoading: (flag) => {
-      dispatch(setLoadingCreator(flag))
-    }
-  };
-};
-export default connect(mapStateToProps, mapDispatchToState)(UsersAPIContainer);
+
+export default connect(mapStateToProps, {
+  toggleFollow:toggleFollowCreator,
+  setUsers: setUsersCreator,
+  setPage: setCurrentPageCreator,
+  setTotalCount: setTotalCountCreator,
+  setLoading: setLoadingCreator
+})(UsersAPIContainer);

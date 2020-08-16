@@ -1,3 +1,6 @@
 .loader{
     text-align: center;
 }
+.loader path{
+    fill: var(--hover-color);
+}

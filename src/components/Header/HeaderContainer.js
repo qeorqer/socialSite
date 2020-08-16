@@ -10,11 +10,6 @@ let mapStateToProps = (state) => {
   };
 };
 
-let mapDispatchToState = (dispatch) => {
-  return {
-    setTheme: () => {
-      dispatch(setThemeCreator());
-    },
-  };
-};
-export default connect(mapStateToProps, mapDispatchToState)(Header);
+export default connect(mapStateToProps, {
+  setTheme:setThemeCreator
+})(Header);
