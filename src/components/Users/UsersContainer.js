@@ -1,28 +1,33 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleFollowCreator, setUsersCreator, setCurrentPageCreator, setTotalCountCreator, setLoadingCreator } from "../../redux/usersReducer";
-import Axios from "axios";
+import {
+  toggleFollowCreator,
+  setUsersCreator,
+  setCurrentPageCreator,
+  setTotalCountCreator,
+  setLoadingCreator,
+  setToggleFollowCreator
+} from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../preloader/Preloader"
+import {usersAPI} from "../../API/api";
 
 class UsersAPIContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.users.length) {
-       this.props.setLoading(true);
-      let baseUrl = `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`;
-      Axios.get(baseUrl).then((response) => {
-        this.props.setUsers(response.data.items);
-        this.props.setTotalCount(response.data.totalCount);
+    this.props.setLoading(true);
+    usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then((response) => {
+        this.props.setUsers(response.items);
+        this.props.setTotalCount(response.totalCount);
         this.props.setLoading(false);
       });
-    }
+
   }
   onPageChanged = (page) => {
     this.props.setPage(page);
-    let baseUrl = `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`;
+
      this.props.setLoading(true);
-    Axios.get(baseUrl).then((response) => {
-      this.props.setUsers(response.data.items);
+    usersAPI.getUsers(page,this.props.pageSize).then((response) => {
+      this.props.setUsers(response.items);
        this.props.setLoading(false);
       
     });
@@ -55,13 +60,13 @@ class UsersAPIContainer extends React.Component {
       pages.push("...");
 
     }
-    if (current != pagesCount){
+    if (current !== pagesCount){
       pages.push(pagesCount);
     }
    
 
     return <>
-    {this.props.isLoading ? <Preloader /> :  <Users users = {this.props.users} toggleFollow = {this.props.toggleFollow} pages = {pages} currentPage = {this.props.currentPage} onPageChanged = {this.onPageChanged} isLoading = {this.props.isLoading} /> }
+    {this.props.isLoading ? <Preloader /> :  <Users {...this.props} pages = {pages} onPageChanged = {this.onPageChanged}  /> }
    
     </>
   }
@@ -73,7 +78,8 @@ let mapStateToProps = (state) => {
     pageSize: state.usersPage.pageSize,
     totalCount: state.usersPage.totalCount,
     currentPage: state.usersPage.currentPage,
-    isLoading: state.usersPage.isLoading
+    isLoading: state.usersPage.isLoading,
+    followingInProgress: state.usersPage.followingInProgress
   };
 };
 
@@ -82,5 +88,6 @@ export default connect(mapStateToProps, {
   setUsers: setUsersCreator,
   setPage: setCurrentPageCreator,
   setTotalCount: setTotalCountCreator,
-  setLoading: setLoadingCreator
+  setLoading: setLoadingCreator,
+  setFollowingLoad: setToggleFollowCreator
 })(UsersAPIContainer);

@@ -30,9 +30,12 @@
   transition: 0.3s all;
   font-weight: bold;
   font-size: 14px;
-  width: 75px;
+  width: 80px;
 }
 
+.btnHolder button:disabled{
+  opacity: .7;
+}
 .btnHolder button:hover,
 .btnHolder button:focus {
   background-color: transparent;

@@ -3,10 +3,11 @@ import classes from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/Profileinfo";
 import PostsContainer from "./posts/PostsContainer";
 
-let Profile = () => (
+let Profile = (props) => (
+
   <div className={classes.content}>
    
-    <ProfileInfo />
+    <ProfileInfo profile = {props.profile}/>
     <PostsContainer />
   </div>
 );

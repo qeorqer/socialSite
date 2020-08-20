@@ -30,8 +30,8 @@ header img{
   transition:.3s all;
 }
 header button{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border:1px solid #fff;
     cursor: pointer;
@@ -40,4 +40,18 @@ header button{
 
 header img:hover{
    width: 110px;
+}
+
+.login{
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+.login a{
+    display: block;
+    color:#fff;
+    text-decoration: none;
+    flex-basis: 100%;
+    margin-top: 5px;
 }

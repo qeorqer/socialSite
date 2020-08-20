@@ -10,7 +10,6 @@ const appCommonReducer = (state = init, action) => {
         ...state,
         lightTheme: !state.lightTheme
         }
-      break;
 
     default:
       return state;
