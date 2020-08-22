@@ -1,5 +1,6 @@
+import {authAPI} from "../API/api";
+
 const SET_USER_DATE = "SET_USER_DATE";
-const SET_LOADING = "SET_LOADING";
 
 let init = {
   id: null,
@@ -17,14 +18,20 @@ const authReducer = (state = init, action) => {
         isAuth: true
       };
 
-      case SET_LOADING:
-      return {...state, "isLoading" : action.flag}
-
     default:
       return state;
   }
 };
 export const setUserDataCreator = (id,email,login) => ({ type: SET_USER_DATE, data:{id,email,login} });
-export const setLoadingCreator = (flag) => ({ type: SET_LOADING,flag });
 
+export const isAuthThunkCreator = (userId) => {
+  return (dispatch) => {
+    authAPI.isAuth().then((response) => {
+      if(response.data.resultCode === 0){
+        let {id, login, email} = response.data.data;
+        dispatch(setUserDataCreator(id,login,email));
+      }
+    });
+  }
+}
 export default authReducer;

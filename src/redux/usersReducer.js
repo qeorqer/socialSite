@@ -1,3 +1,5 @@
+import {usersAPI} from "../API/api";
+
 const TOGGLEFOLLOW = "TOGGLE-FOLLOW-USER";
 const SET_USERS = "SET-USERS";
 const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
@@ -58,5 +60,32 @@ export const setCurrentPageCreator = (currentPage) => ({type: SET_CURRENT_PAGE, 
 export const setTotalCountCreator = (count) => ({type: SET_TOTAL_COUNT, count});
 export const setLoadingCreator = (flag) => ({type: SET_LOADING, flag});
 export const setToggleFollowCreator = (flag, id) => ({type: TOGGLE_FOLLOW_PROGRESS, flag, id});
+
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(setLoadingCreator(true));
+        usersAPI.getUsers(currentPage, pageSize).then((data) => {
+            dispatch(setUsersCreator(data.items));
+            dispatch(setTotalCountCreator(data.totalCount));
+            dispatch(setLoadingCreator(false));
+        });
+    }
+}
+
+export const toggleFollowThunkCreator = (flag, userId) => {
+    return (dispatch) => {
+        dispatch(setToggleFollowCreator(true, userId));
+
+        (flag ? usersAPI.unfollow(userId) : usersAPI.follow(userId))
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(toggleFollowCreator(userId));
+                    dispatch(setToggleFollowCreator(false, userId));
+                }
+            });
+
+
+    }
+}
 
 export default usersReducer;

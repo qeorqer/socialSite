@@ -8,8 +8,24 @@ let axiosInstance = Axios.create({
     }
 })
 export const usersAPI = {
-    getUsers(currentPage,pageSize) {
+    getUsers(currentPage, pageSize) {
         return axiosInstance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
+    },
+    follow(userId) {
+        return axiosInstance.post(`follow/${userId}`)
+    },
+    unfollow(userId) {
+        return axiosInstance.delete(`follow/${userId}`)
+    },
+    getProfile(userId) {
+        return axiosInstance.get(`profile/${userId}`)
+    }
+}
+
+
+export const authAPI = {
+    isAuth() {
+        return axiosInstance.get(`auth/me`);
     }
 }

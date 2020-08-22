@@ -5,15 +5,25 @@ import {
 } from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
+import WithAuthRedirect from "../../HOC/WithAuthRedirect";
+import {compose} from "redux";
 
 let mapStateToProps = (state) =>{
   return {
-    messagesPage: state.messagesPage
+    messagesPage: state.messagesPage,
+
     
   }
 }
-const DialogsContainer = connect(mapStateToProps,{
-  changeText:changeTextMessageCreator,
-  sendMessage:addMessageCreator
-})(Dialogs);
-export default DialogsContainer;
+
+
+
+
+
+export default compose(
+    connect(mapStateToProps,{
+      changeText:changeTextMessageCreator,
+      sendMessage:addMessageCreator
+    }),
+    WithAuthRedirect
+)(Dialogs);;

@@ -5,10 +5,12 @@ import Nav from "./components/Nav/Nav";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
+import Login from "./components/login/Login";
 import {Route, BrowserRouter} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+
 
 
 function App(props) {
@@ -24,6 +26,7 @@ function App(props) {
                     <Route path="/music" component={Music}/>
                     <Route path="/users" component={UsersContainer}/>
                     <Route path="/settings" component={Settings}/>
+                    <Route path="/login" component={Login}/>
                 </div>
             </div>
         </BrowserRouter>

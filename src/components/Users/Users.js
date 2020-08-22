@@ -2,7 +2,6 @@ import React from "react";
 import classes from "./Users.module.css";
 import userLogo from "../../firstUser/User_Cyber_Spy.png";
 import {NavLink} from "react-router-dom";
-import Axios from "axios";
 
 let Users = (props) => {
 
@@ -29,48 +28,18 @@ let Users = (props) => {
                     </div>
                     <div className={classes.btnHolder}>
                         <button disabled={props.followingInProgress.some(id => id === el.id)}
-                            onClick={() => {
-
-                                props.setFollowingLoad(true, el.id);
-                                console.log(props.followingInProgress);
-                                let baseUrl = `https://social-network.samuraijs.com/api/1.0/follow/${el.id}`;
-
-                                    el.followed ?
-                                        Axios.delete(baseUrl, {
-                                            withCredentials: true,
-                                            headers: {
-                                                "API-KEY": "ad2dcc3a-2e79-415a-9d4a-70589d65b1fe"
-                                            }
-                                        }).then((response) => {
-                                            if (response.data.resultCode === 0) {
-                                                props.toggleFollow(el.id);
-                                                props.setFollowingLoad(false, el.id);
-                                            }
-                                        })
-                                        :
-                                        Axios.post(baseUrl, null, {
-                                            withCredentials: true,
-                                            headers: {
-                                                "API-KEY": "ad2dcc3a-2e79-415a-9d4a-70589d65b1fe"
-                                            }
-                                        }).then((response) => {
-                                            if (response.data.resultCode === 0) {
-                                                props.toggleFollow(el.id);
-                                                props.setFollowingLoad(false, el.id);
-                                            }
-                                        });
-
-                            }}
-                        >
+                                onClick={() => {
+                                    props.toggleFollow(el.followed, el.id)
+                                }}>
                             {el.followed ? "unfollow" : "follow"}
                         </button>
                     </div>
                 </div>
             ))}
-            <div className={classes.pagination}>
-                {props.pages.map((el) => (
-                    <span
-                        className={props.currentPage == el ? classes.selected : ""}
+            <div className={classes.pagination} >
+                {props.pages.map((el,id) => (
+                    <span key={id}
+                        className={props.currentPage === el ? classes.selected : ""}
                         onClick={() => {
                             props.onPageChanged(el);
                         }}

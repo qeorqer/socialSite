@@ -5,7 +5,6 @@ import LogoDark from "../../logo2.png";
 import {NavLink} from "react-router-dom";
 
 let Header = (props) => {
-
     let style = `
     :root {
       --main-bg-color: #3d4248;
@@ -18,11 +17,12 @@ let Header = (props) => {
    `
     return (
         <header>
+
             <a href="/"><img src={props.lightTheme ? LogoDark : LogoLight} alt="logo"/></a>
             <div className={classes.login}>
                 <button className="changeTheme" onClick={() => {
                     props.setTheme()
-                }}></button>
+                }}/>
                 <NavLink to="/login">{props.isAuth ? "Log out" : "Log in"} </NavLink>
             </div>
             <style media={props.lightTheme ? "screen" : "none"}>

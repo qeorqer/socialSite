@@ -1,3 +1,6 @@
+import {usersAPI} from "../API/api";
+import {setLoadingCreator} from "./usersReducer";
+
 const ADD_POST = "ADD-POST";
 const CHANGE_TEXT = "CHANGE-PROFILE-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
@@ -54,4 +57,13 @@ export const addPostCreator = () => ({type: ADD_POST});
 export const changeTextCreator = (text) => ({type: CHANGE_TEXT, text});
 export const setUserProfileCreator = (profile) => ({type: SET_USER_PROFILE, profile});
 
+export const getProfileThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(setLoadingCreator(true));
+        usersAPI.getProfile(userId).then((response) => {
+            dispatch(setUserProfileCreator(response.data));
+            dispatch(setLoadingCreator(false));
+        });
+    }
+}
 export default profileReducer;
