@@ -18,7 +18,7 @@ let Header = (props) => {
     return (
         <header>
 
-            <a href="/"><img src={props.lightTheme ? LogoDark : LogoLight} alt="logo"/></a>
+            <NavLink to="/"><img src={props.lightTheme ? LogoDark : LogoLight} alt="logo"/></NavLink>
             <div className={classes.login}>
                 <button className="changeTheme" onClick={() => {
                     props.setTheme()

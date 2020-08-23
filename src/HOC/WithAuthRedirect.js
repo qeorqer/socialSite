@@ -11,11 +11,11 @@ const WithAuthRedirect = (Component) => {
 
     const redirectComponent = props => {
 
+            if (!props.isAuth ) {
+                return <Redirect to={'/login'}/>
+            }
+            return <Component {...props} />
 
-        if (!props.isAuth) {
-            return <Redirect to={'/login'}/>
-        }
-        return <Component {...props} />
     }
 
     let connectedAuthRedirectContainer = connect(mapStateToProps)(redirectComponent);
