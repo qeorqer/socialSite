@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import Message from "./Message/Message";
 import DialogItem from "./dialogsItem/DialogItem";
-import {Redirect} from "react-router-dom";
+import SendMessageForm from "./SendMessageForm";
 
 
 const Dialogs = (props) => {
@@ -15,14 +15,10 @@ const Dialogs = (props) => {
     <Message message={el.message} key={el.id} />
   ));
 
-  let sendMessage = () => {
-    props.sendMessage();
+  let sendMessage = (values) => {
+      props.sendMessage(values.message)
   };
 
-  let changeText = (e) => {
-    let text = e.target.value;
-   props.changeText(text);
-  };
 
 
   return (
@@ -31,16 +27,10 @@ const Dialogs = (props) => {
       <div className={classes.dialogContent}>
         <div className={classes.messages}>{messageItems}</div>
 
-        <div className={classes.addMessage}>
-          <textarea
-            onChange={changeText}
-            value={props.messagesPage.newMessageText}
-            placeholder ="Write a message"
-          />
-          <button onClick={sendMessage}>Send</button>
-        </div>
+          <SendMessageForm onSubmit = {sendMessage}/>
       </div>
     </div>
   );
 };
+
 export default Dialogs;

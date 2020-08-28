@@ -18,14 +18,29 @@ export const usersAPI = {
     unfollow(userId) {
         return axiosInstance.delete(`follow/${userId}`)
     },
-    getProfile(userId) {
-        return axiosInstance.get(`profile/${userId}`)
-    }
+
 }
 
+export const profileAPI = {
+    getProfile(userId) {
+        return axiosInstance.get(`profile/${userId}`)
+    },
+    getStatus(userId) {
+        return axiosInstance.get(`/profile/status/${userId}`)
+    },
+    updateStatus(status){
+        return axiosInstance.put(`/profile/status`,{status:status})
+    }
+}
 
 export const authAPI = {
     isAuth() {
         return axiosInstance.get(`auth/me`);
+    },
+    logIn(email,password,rememberMe = false){
+        return axiosInstance.post(`/auth/login`,{email,password,rememberMe})
+    },
+    logOut(){
+        return axiosInstance.delete(`/auth/login`);
     }
 }

@@ -29,7 +29,8 @@ body {
   background-color:var(--main-bg-color);
   min-height: 100vh;
   overflow-x: hidden;
-  color:var(--main-txt-color)
+  color:var(--main-txt-color);
+
 }
 li{
     list-style: none;

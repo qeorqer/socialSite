@@ -58,6 +58,7 @@
 }
 .user h3{
   max-width: 175px;
+  font-size: 16px;
 }
 .user p {
   white-space: nowrap; /* Отменяем перенос текста */

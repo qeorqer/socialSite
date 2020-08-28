@@ -23,7 +23,12 @@ let Header = (props) => {
                 <button className="changeTheme" onClick={() => {
                     props.setTheme()
                 }}/>
-                <NavLink to="/login">{props.isAuth ? "Log out" : "Log in"} </NavLink>
+                {props.isAuth ?
+                    <p onClick={props.logOut}>Log out</p>
+                    :
+                    <NavLink to="/login"> Log in </NavLink>
+                }
+
             </div>
             <style media={props.lightTheme ? "screen" : "none"}>
                 {style}

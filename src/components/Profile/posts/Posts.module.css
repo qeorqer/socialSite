@@ -11,9 +11,12 @@
     padding:  5px;
     margin: 10px 0;
     border:1px solid var(--hover-color);
-    width: 80%;
+    width: 100%;
     min-height: 62px;
 
+}
+.addPost > div{
+    width: 80%;
 }
 .addPost button{
     padding: 10px 15px;

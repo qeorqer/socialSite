@@ -4,7 +4,7 @@ import {
     setCurrentPageCreator, getUsersThunkCreator, toggleFollowThunkCreator
 } from "../../redux/usersReducer";
 import Users from "./Users";
-import Preloader from "../preloader/Preloader";
+import Preloader from "../common/preloader/Preloader";
 
 class UsersAPIContainer extends React.Component {
 

@@ -1,9 +1,9 @@
-import {usersAPI} from "../API/api";
+import {profileAPI} from "../API/api";
 import {setLoadingCreator} from "./usersReducer";
 
 const ADD_POST = "ADD-POST";
-const CHANGE_TEXT = "CHANGE-PROFILE-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
+const SET_USER_STATUS = "SET_USER_STATUS";
 
 let init = {
     postsData: [
@@ -12,8 +12,8 @@ let init = {
         {id: 3, message: "What to wear?", likes: 11},
         {id: 4, message: "I am buying the longboard", likes: 333},
     ],
-    newPostText: "",
-    profile: null
+    profile: null,
+    status: ""
 }
 const profileReducer = (state = init, action) => {
     switch (action.type) {
@@ -21,23 +21,15 @@ const profileReducer = (state = init, action) => {
         case ADD_POST:
             let newPost = {
                 id: state.postsData.length,
-                message: state.newPostText,
+                message: action.newPostText,
                 likes: 0,
             };
 
             if (newPost.message) {
                 return {
                     ...state,
-                    newPostText: "",
                     postsData: [...state.postsData, newPost]
                 }
-            }
-            break;
-
-        case CHANGE_TEXT:
-            return {
-                ...state,
-                newPostText: action.text
             }
             break;
         case SET_USER_PROFILE:
@@ -45,7 +37,11 @@ const profileReducer = (state = init, action) => {
                 ...state,
                 profile: action.profile
             }
-            break;
+        case SET_USER_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
 
         default:
             return state;
@@ -53,16 +49,33 @@ const profileReducer = (state = init, action) => {
     }
 };
 
-export const addPostCreator = () => ({type: ADD_POST});
-export const changeTextCreator = (text) => ({type: CHANGE_TEXT, text});
+export const addPostCreator = (newPostText) => ({type: ADD_POST,newPostText});
 export const setUserProfileCreator = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setUserStatusCreator = (status) => ({type: SET_USER_STATUS, status});
 
 export const getProfileThunkCreator = (userId) => {
     return (dispatch) => {
         dispatch(setLoadingCreator(true));
-        usersAPI.getProfile(userId).then((response) => {
+        profileAPI.getProfile(userId).then((response) => {
             dispatch(setUserProfileCreator(response.data));
             dispatch(setLoadingCreator(false));
+        });
+    }
+}
+export const getStatusThunkCreator = (userId) => {
+    return (dispatch) => {
+        profileAPI.getStatus(userId).then((response) => {
+
+            dispatch(setUserStatusCreator(response.data));
+        });
+    }
+}
+export const updateStatusThunkCreator = (status) => {
+    return (dispatch) => {
+        profileAPI.updateStatus(status).then((response) => {
+            if(response.data.resultCode === 0){
+            dispatch(setUserStatusCreator(status));
+            }
         });
     }
 }

@@ -49,12 +49,15 @@
   align-items: center;
   padding-left: 20px;
 }
+.addMessage > div{
+  width: 80%;
+}
 .addMessage textarea {
   display: block;
   padding: 5px;
   margin: 10px 0;
   border: 1px solid var(--hover-color);
-  width: 80%;
+  width: 100%;
   min-height: 62px;
 }
 
