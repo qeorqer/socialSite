@@ -13,7 +13,7 @@
     border:1px solid var(--hover-color);
     width: 100%;
     min-height: 62px;
-
+    border-radius: 3px;
 }
 .addPost > div{
     width: 80%;
@@ -28,12 +28,14 @@
     font-weight: bold;
     font-size: 18px;
     max-height: 40px;
+    border-radius: 3px;
 }
 .posts > div{
     border:1px solid var(--hover-color);
     padding: 10px 100px 10px 15px;;
     margin: 15px 0;
     position: relative;
+    border-radius: 3px;
 }
 
 .posts > div >div{

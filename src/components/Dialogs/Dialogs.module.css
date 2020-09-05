@@ -59,6 +59,8 @@
   border: 1px solid var(--hover-color);
   width: 100%;
   min-height: 62px;
+  border-radius: 3px;
+
 }
 
 .addMessage button {
@@ -71,6 +73,8 @@
   font-weight: bold;
   font-size: 18px;
   max-height: 40px;
+  border-radius: 3px;
+
 }
 
 .addMessage button:hover,

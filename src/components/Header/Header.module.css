@@ -36,6 +36,7 @@ header button{
     border:1px solid #fff;
     cursor: pointer;
     background: linear-gradient(to right,var(--hover-color) 50%, #fff 50%);
+    outline: none;
 }
 
 header img:hover{

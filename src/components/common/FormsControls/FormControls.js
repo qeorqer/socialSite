@@ -5,7 +5,7 @@ const FormControl = ({input, meta, ...props}) => {
     const hasError = meta.error && meta.touched;
     return (
 
-        <div className={classes.formControl + " " + (hasError && classes.error)}>
+        <div className={classes.formControl + " " + (hasError ? classes.error : "")}>
             {props.children}
 
             { hasError && <span>{meta.error}</span>}

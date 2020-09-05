@@ -3,9 +3,9 @@ import {logInThunkCreator} from "../../redux/authReducer";
 import {connect} from "react-redux";
 import LoginForm from "./LoginForm";
 import {Redirect} from "react-router-dom";
+import './login.css';
 
-
-const Login = props => {
+const Login = ({logIn,isAuth}) => {
     let style = `
     .inner {
   grid-template-areas: 
@@ -22,15 +22,15 @@ display:none
 }
    `
     const onSubmit = formData => {
-        props.logIn(formData.email,formData.password,formData.rememberMe);
+        logIn(formData.email,formData.password,formData.rememberMe);
     }
-    if(props.isAuth){
+    if(isAuth){
         return  <Redirect to='/profile'/>
     }
     return (
         <div className="loginPage">
             <h1>Login</h1>
-            <LoginForm onSubmit ={onSubmit} logIn = {props.logIn}/>
+            <LoginForm onSubmit ={onSubmit} />
 
             <style>
                 {style}

@@ -30,7 +30,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   color:var(--main-txt-color);
-
+  padding-bottom: 10px;
 }
 li{
     list-style: none;
@@ -50,6 +50,7 @@ li{
 .app-content{
   padding: 20px;
   grid-area: cnt;
+  border-radius: 3px;
   background-color: var(--content-bg);
   color:var(--main-txt-color);
 }

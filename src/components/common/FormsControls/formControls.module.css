@@ -8,7 +8,15 @@
 
 .formControl.error span{
     color:#BD1E2C;
+    position: absolute;
+    white-space: nowrap;
+    top: 33%;
+    right: 10px;
+    margin: auto;
 }
 .formSummaryError{
     border:2px solid #BD1E2C;
+}
+.formControl{
+    position: relative;
 }

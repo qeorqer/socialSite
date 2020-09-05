@@ -5,6 +5,14 @@ import {
 } from "../../redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsLoading,
+    getPageSize,
+    getTotalCount,
+    getUsers
+} from "../../redux/usersSelectors";
 
 class UsersAPIContainer extends React.Component {
 
@@ -19,41 +27,11 @@ class UsersAPIContainer extends React.Component {
     };
 
     render() {
-        let pagesCount = Math.ceil(this.props.totalCount / this.props.pageSize);
-
-        let pages = [];
-        let current = this.props.currentPage;
-
-        /*making pagination in a dumb way*/
-        pages.push(1);
-        if (current > 3) {
-            pages.push("...");
-        }
-        if (current - 2 > 0 && current - 2 !== 1) {
-            pages.push(current - 2);
-        }
-        if (current - 1 > 0 && current - 1 !== 1) {
-            pages.push(current - 1);
-        }
-        if (current !== 1) {
-            pages.push(current);
-        }
-        if (current + 1 && current + 1 < pagesCount) {
-            pages.push(current + 1);
-        }
-        if (current + 2 < pagesCount) {
-            pages.push(current + 2);
-            pages.push("...");
-
-        }
-        if (current !== pagesCount) {
-            pages.push(pagesCount);
-        }
 
 
         return <>
             {this.props.isLoading ? <Preloader/> :
-                <Users {...this.props} pages={pages} onPageChanged={this.onPageChanged}/>}
+                <Users {...this.props}  onPageChanged={this.onPageChanged}/>}
 
         </>
     }
@@ -61,14 +39,14 @@ class UsersAPIContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        isLoading: state.usersPage.isLoading,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalCount: getTotalCount(state),
+        currentPage: getCurrentPage(state),
+        isLoading: getIsLoading(state),
+        followingInProgress: getFollowingInProgress(state)
     };
-};
+}
 
 export default connect(mapStateToProps, {
     toggleFollow: toggleFollowThunkCreator,

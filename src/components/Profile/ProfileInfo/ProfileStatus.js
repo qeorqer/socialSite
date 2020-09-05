@@ -1,52 +1,36 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import classes from "./Profileinfo.module.css";
 
-class ProfileStatus extends React.Component {
-    constructor(props) {
-        super(props);
+const ProfileStatus = props => {
+    const [editMode, setEditMode] = useState(false);
+    const [status, setStatus] = useState(props.status);
+
+
+    const editModeActive = () => {
+        setEditMode(true);
+    }
+    const editModeDeactivate = () => {
+        setEditMode(false);
+        props.updateStatus(status)
+    }
+    const onStatusChange = (e) => {
+        setStatus(e.currentTarget.value);
     }
 
-    state = {
-        editMode: false,
-        status: this.props.status
-    };
+    useEffect(() => {
+        setStatus(props.status);
+    }, [props.status])
 
-    editModeActive =() =>{
-        this.setState({
-            editMode : true
-        })
-    }
-    editModeDeactivate =() =>{
-        this.setState({
-            editMode : false
-        })
-        this.props.updateStatus(this.state.status)
-    }
-    onStatusChange = (e) =>{
-        this.setState({
-            status: e.currentTarget.value
-        })
+    return (
+        <div className={classes.status}>
+            {editMode ?
+                <div><input onChange={onStatusChange} type="text" value={status} autoFocus={true}/>
+                    <button onClick={editModeDeactivate}>Save</button>
+                </div> :
+                <p onDoubleClick={editModeActive}>{props.status ? props.status : "Set your status"}</p>}
+        </div>
 
-    }
-    componentDidUpdate(prevProps, prevState) {
-    if(prevProps.status !== this.props.status){
-        this.setState({
-            status:this.props.status
-        })
-    }
+    )
 
-    }
-
-    render() {
-
-
-        return (
-            <div className={classes.status} >
-                {this.state.editMode ? <div><input onChange={this.onStatusChange}type="text" value={this.state.status} autoFocus={true}/><button onClick={this.editModeDeactivate}>Save</button></div> : <p onDoubleClick={this.editModeActive}>{this.props.status ?this.props.status : "Set your status" }</p>}
-
-            </div>
-
-        )
-    }
 };
 export default ProfileStatus;

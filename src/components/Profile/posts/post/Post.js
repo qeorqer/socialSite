@@ -1,7 +1,7 @@
 import React from "react";
 
 let Post = (props) => (
-  <div key={props.id}>
+  <div>
     {props.message}{" "}
     <div>
       <button>like</button>

@@ -44,7 +44,6 @@ const usersReducer = (state = init, action) => {
             return {...state, "isLoading": action.flag}
 
         case TOGGLE_FOLLOW_PROGRESS:
-            console.log(3213);
             return {
                 ...state,
                 "followingInProgress": action.flag ? [...state.followingInProgress, action.id] : state.followingInProgress.filter(id => id !== action.id)
@@ -61,31 +60,23 @@ export const setTotalCountCreator = (count) => ({type: SET_TOTAL_COUNT, count});
 export const setLoadingCreator = (flag) => ({type: SET_LOADING, flag});
 export const setToggleFollowCreator = (flag, id) => ({type: TOGGLE_FOLLOW_PROGRESS, flag, id});
 
-export const getUsersThunkCreator = (currentPage, pageSize) => {
-    return (dispatch) => {
-        dispatch(setLoadingCreator(true));
-        usersAPI.getUsers(currentPage, pageSize).then((data) => {
-            dispatch(setUsersCreator(data.items));
-            dispatch(setTotalCountCreator(data.totalCount));
-            dispatch(setLoadingCreator(false));
-        });
+export const getUsersThunkCreator = (currentPage, pageSize) => async (dispatch) => {
+    dispatch(setLoadingCreator(true));
+    let data = await usersAPI.getUsers(currentPage, pageSize)
+    dispatch(setUsersCreator(data.items));
+    dispatch(setTotalCountCreator(data.totalCount));
+    dispatch(setLoadingCreator(false));
+}
+
+
+export const toggleFollowThunkCreator = (flag, userId) => async (dispatch) => {
+    dispatch(setToggleFollowCreator(true, userId));
+    let response = await (flag ? usersAPI.unfollow(userId) : usersAPI.follow(userId));
+    if (response.data.resultCode === 0) {
+        dispatch(toggleFollowCreator(userId));
+        dispatch(setToggleFollowCreator(false, userId));
     }
 }
 
-export const toggleFollowThunkCreator = (flag, userId) => {
-    return (dispatch) => {
-        dispatch(setToggleFollowCreator(true, userId));
-
-        (flag ? usersAPI.unfollow(userId) : usersAPI.follow(userId))
-            .then((response) => {
-                if (response.data.resultCode === 0) {
-                    dispatch(toggleFollowCreator(userId));
-                    dispatch(setToggleFollowCreator(false, userId));
-                }
-            });
-
-
-    }
-}
 
 export default usersReducer;

@@ -1,0 +1,62 @@
+.loginPage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.loginPage > * {
+    flex-basis: 100%;
+    text-align: center;
+}
+
+.loginPage h1 {
+    margin-bottom: 30px;
+}
+
+.loginPage input {
+    margin: 10px 0;
+}
+.loginPage form{
+    padding: 25px;
+    max-width: 320px;
+    background-color: var(--main-bg-color);
+    border-radius: 3px;
+}
+
+.loginInputs input {
+    border: 1px solid var(--hover-color);
+    width: 270px;
+    min-height: 35px;
+    padding: 5px;
+    margin: 10px 0;
+    border-radius: 3px;
+}
+
+.loginCheckbox > div:first-child {
+    display: inline-block;
+}
+.loginCheckbox input{
+    margin-right: 5px;
+}
+.loginBtnHolder{
+    display: block;
+    margin-top: 15px;
+}
+.loginBtnHolder button{
+    padding: 10px 30px;
+    border: 1px solid var(--hover-color);
+    background-color: var(--hover-color);
+    color: white;
+    cursor: pointer;
+    transition: .3s all ease;
+    font-weight: bold;
+    font-size: 18px;
+    max-height: 40px;
+    border-radius: 3px;
+}
+.loginBtnHolder button:hover,
+.loginBtnHolder button:focus{
+    background-color: transparent;
+    color: var(--main-txt-color);
+}

@@ -28,8 +28,17 @@ export const profileAPI = {
     getStatus(userId) {
         return axiosInstance.get(`/profile/status/${userId}`)
     },
-    updateStatus(status){
-        return axiosInstance.put(`/profile/status`,{status:status})
+    updateStatus(status) {
+        return axiosInstance.put(`/profile/status`, {status})
+    },
+    setPhoto(photoFile) {
+        let formData = new FormData();
+        formData.append("image", photoFile);
+        return axiosInstance.put(`/profile/photo`, formData, {
+            headers: {
+                'Content-Type': "multipart/form-data instead"
+            }
+        })
     }
 }
 
@@ -37,10 +46,10 @@ export const authAPI = {
     isAuth() {
         return axiosInstance.get(`auth/me`);
     },
-    logIn(email,password,rememberMe = false){
-        return axiosInstance.post(`/auth/login`,{email,password,rememberMe})
+    logIn(email, password, rememberMe = false) {
+        return axiosInstance.post(`/auth/login`, {email, password, rememberMe})
     },
-    logOut(){
+    logOut() {
         return axiosInstance.delete(`/auth/login`);
     }
 }

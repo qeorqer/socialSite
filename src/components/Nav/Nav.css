@@ -2,6 +2,7 @@ nav {
   grid-area: nv;
   background-color: var(--content-bg);
   padding: 15px;
+  border-radius: 3px;
 }
 nav a {
   font-weight: bold;

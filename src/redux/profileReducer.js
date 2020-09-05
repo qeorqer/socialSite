@@ -4,6 +4,8 @@ import {setLoadingCreator} from "./usersReducer";
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
 const SET_USER_STATUS = "SET_USER_STATUS";
+const REMOVE_POST = "REMOVE_POST";
+const SET_PHOTO = "SET_PHOTO";
 
 let init = {
     postsData: [
@@ -43,40 +45,56 @@ const profileReducer = (state = init, action) => {
                 status: action.status
             }
 
+        case REMOVE_POST:
+            return {
+                ...state,
+                postsData: state.postsData.filter(el => el.id !== action.postId)
+            }
+        case SET_PHOTO:
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            }
+
+
         default:
             return state;
 
     }
 };
 
-export const addPostCreator = (newPostText) => ({type: ADD_POST,newPostText});
+export const addPostCreator = (newPostText) => ({type: ADD_POST, newPostText});
 export const setUserProfileCreator = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setUserStatusCreator = (status) => ({type: SET_USER_STATUS, status});
+export const removePostCreator = (postId) => ({type: REMOVE_POST, postId});
+export const setPhotoCreator = (photos) => ({type: SET_PHOTO, photos});
 
-export const getProfileThunkCreator = (userId) => {
-    return (dispatch) => {
-        dispatch(setLoadingCreator(true));
-        profileAPI.getProfile(userId).then((response) => {
-            dispatch(setUserProfileCreator(response.data));
-            dispatch(setLoadingCreator(false));
-        });
-    }
+export const getProfileThunkCreator = (userId) => async (dispatch) => {
+    dispatch(setLoadingCreator(true));
+    let response = await profileAPI.getProfile(userId)
+    dispatch(setUserProfileCreator(response.data));
+    dispatch(setLoadingCreator(false));
 }
-export const getStatusThunkCreator = (userId) => {
-    return (dispatch) => {
-        profileAPI.getStatus(userId).then((response) => {
 
-            dispatch(setUserStatusCreator(response.data));
-        });
+export const getStatusThunkCreator = (userId) => async (dispatch) => {
+    let response = await profileAPI.getStatus(userId)
+    dispatch(setUserStatusCreator(response.data));
+}
+
+export const updateStatusThunkCreator = (status) => async (dispatch) => {
+    let response = await profileAPI.updateStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setUserStatusCreator(status));
     }
 }
-export const updateStatusThunkCreator = (status) => {
-    return (dispatch) => {
-        profileAPI.updateStatus(status).then((response) => {
-            if(response.data.resultCode === 0){
-            dispatch(setUserStatusCreator(status));
-            }
-        });
+
+export const setPhotoThunkCreator = (file) => async (dispatch) => {
+    let response = await profileAPI.setPhoto(file);
+    if (response.data.resultCode === 0) {
+        dispatch(setPhotoCreator(response.data.data.photos));
     }
+
 }
+
+
 export default profileReducer;

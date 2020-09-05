@@ -10,17 +10,26 @@ import {withRouter} from "react-router-dom";
 import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
-
-    componentDidMount() {
+    updateProfile() {
         let userId = this.props.match.params.userId;
         if (!userId) {
             userId = this.props.id;
-            if(!userId){
+            if (!userId) {
                 this.props.history.push("/login");
             }
         }
         this.props.getProfile(userId);
         this.props.getStatus(userId);
+    }
+
+    componentDidMount() {
+        this.updateProfile();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.updateProfile();
+        }
     }
 
     render() {

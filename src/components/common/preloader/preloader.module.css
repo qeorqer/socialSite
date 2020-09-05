@@ -1,5 +1,9 @@
 .loader{
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 .loader path{
     fill: var(--hover-color);

@@ -1,18 +1,20 @@
-import React from "react";
+import React, {Suspense} from "react";
 import "./style.css";
 import Header from "./components/Header/HeaderContainer";
 import Nav from "./components/Nav/Nav";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import Settings from "./components/Settings/Settings";
-import Login from "./components/login/Login";
-import {Route, BrowserRouter} from "react-router-dom";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import {connect} from "react-redux";
 import {initializeThunkCreator} from "./redux/appReducer";
 import Preloader from "./components/common/preloader/Preloader";
+import {compose} from "redux";
+import Login from "./components/login/Login";
+
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
+const SettingsContainer = React.lazy(() => import("./components/Settings/SettingsContainer"));
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 
 
 class App extends React.Component {
@@ -23,44 +25,41 @@ class App extends React.Component {
     render() {
 
         if (!this.props.initialized) {
-            return (
-                <div style={{
-                    minHeight: "100vh",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>
-                    <Preloader/>
-                </div>
-            )
+            return <Preloader minHeight={"100vh"}/>
+
         }
 
         return (
-            <BrowserRouter>
-                <div className="inner">
-                    <Header/>
-                    <Nav/>
-                    <div className="app-content">
-                        <Route path='/profile/:userId?' component={ProfileContainer}/>
-                        <Route exact path="/dialogs" component={DialogsContainer}/>
-                        <Route path="/news" component={News}/>
-                        <Route path="/music" component={Music}/>
-                        <Route path="/users" component={UsersContainer}/>
-                        <Route path="/settings" component={Settings}/>
-                        <Route path="/login" component={Login}/>
-                    </div>
+
+
+            <div className="inner">
+                <Header/>
+                <Nav/>
+                <div className="app-content">
+                    <Suspense fallback={<Preloader />}>
+                    <Route path='/' exact component={this.props.isAuth ? ProfileContainer : Login}/>
+                    <Route path='/profile/:userId?' component={ProfileContainer}/>
+                    <Route exact path="/dialogs" component={DialogsContainer}/>
+                    <Route path="/news" component={News}/>
+                    <Route path="/music" component={Music}/>
+                    <Route path="/users" component={UsersContainer}/>
+                    <Route path="/settings" component={SettingsContainer}/>
+                    <Route path="/login" component={Login}/>
+                    </Suspense>
                 </div>
-            </BrowserRouter>
+            </div>
+
         );
     }
 }
 
 let mapStateToProps = (state) => {
     return {
-        initialized: state.setApp.initialized
+        initialized: state.setApp.initialized,
+        isAuth: state.auth.isAuth
     };
 };
 
 
-export default connect(mapStateToProps, {initializeApp: initializeThunkCreator})(App);
+export default compose(connect(mapStateToProps, {initializeApp: initializeThunkCreator}),
+    withRouter)(App);

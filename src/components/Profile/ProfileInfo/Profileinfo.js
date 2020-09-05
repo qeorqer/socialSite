@@ -1,13 +1,10 @@
 import React from "react";
 import classes from "./Profileinfo.module.css";
 import defaultLogo from "../../../firstUser/User_Cyber_Spy.png"
-import Preloader from "../../common/preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 
 let ProfileInfo = (props) => {
-    if(!props.profile){
-        return <Preloader />
-    }
+
     return (
         <div className={classes.ProfileInfo}>
             <div className={classes.logo}>

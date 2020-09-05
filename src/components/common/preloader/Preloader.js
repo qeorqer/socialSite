@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./preloader.module.css";
 
 const Loader = (props) => (
-    <div className = {classes.loader}>
+    <div className = {classes.loader} style={{minHeight:props.minHeight}}>
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{margin:"auto",background:"transparent",display:"block"}} width="130px" height="130px" viewBox="0 0 100 100" >
             <g transform="translate(50 50)" >
                 <g>
