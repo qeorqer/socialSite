@@ -1,14 +1,82 @@
-.ProfileInfo{
+.ProfileInfo {
     display: grid;
     grid-template-columns: 1fr 2fr;
+    position: relative;
 }
-.logo img{
+
+.logo img {
     width: 225px;
 }
-.ProfileInfo h2{
-    margin-top: 30px;
-    
-}
-.status{
 
+.ProfileInfo h2 {
+    margin-top: 30px;
+    font-size: 26px;
+}
+.profileData p{
+    margin: 10px 0 10px 10px;
+}
+.profileData{
+    margin: 20px 0;
+}
+.contacts li{
+    margin: 10px 0 10px 10px;
+}
+.contacts a{
+    font-size: 14px;
+    text-decoration: none;
+    color:var(--main-txt-color);
+    transition: .3s;
+}
+
+.contacts a:hover{
+    color:var(--hover-color)
+}
+
+.status {
+    max-width: 90%;
+
+}
+
+.status div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status textarea {
+    flex-basis: 85%;
+    padding: 5px;
+    border: 1px solid var(--hover-color);
+    min-height: 50px;
+    border-radius: 3px;
+}
+
+.status button {
+    padding: 10px 15px;
+    border: 1px solid var(--hover-color);
+    background-color: var(--hover-color);
+    color: white;
+    cursor: pointer;
+    transition: .3s all ease;
+    font-weight: bold;
+    font-size: 15px;
+    max-height: 40px;
+    border-radius: 3px;
+}
+
+.status button:hover,
+.status button:focus {
+    background-color: transparent;
+    color: var(--main-txt-color);
+}
+
+.settings {
+    position: absolute;
+    right: 0;
+    fill: var(--hover-color);
+    transition: .3s all;
+}
+.settings:hover{
+    transform: rotate(45deg);
 }

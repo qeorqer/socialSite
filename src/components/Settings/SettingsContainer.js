@@ -3,10 +3,11 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import Settings from "./Settings";
 import WithAuthRedirect from "../../HOC/WithAuthRedirect";
-import {setPhotoThunkCreator} from "../../redux/profileReducer";
+import {saveProfileThunkCreator, setPhotoThunkCreator} from "../../redux/profileReducer";
 
 class SettingsContainer extends React.Component {
     render() {
+
         return (
             <Settings {...this.props} />
         );
@@ -14,12 +15,14 @@ class SettingsContainer extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => ({}
-
+let mapStateToProps = (state) => ({
+    profile:state.profilePage.profile
+    }
 )
 export default compose(
     connect(mapStateToProps, {
-        setPhoto: setPhotoThunkCreator
+        setPhoto: setPhotoThunkCreator,
+        saveProfile: saveProfileThunkCreator
     }),
     WithAuthRedirect
 )(SettingsContainer);

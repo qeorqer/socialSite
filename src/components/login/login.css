@@ -24,7 +24,8 @@
     border-radius: 3px;
 }
 
-.loginInputs input {
+.loginInputs input,
+.captcha input{
     border: 1px solid var(--hover-color);
     width: 270px;
     min-height: 35px;

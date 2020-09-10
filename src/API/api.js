@@ -26,19 +26,22 @@ export const profileAPI = {
         return axiosInstance.get(`profile/${userId}`)
     },
     getStatus(userId) {
-        return axiosInstance.get(`/profile/status/${userId}`)
+        return axiosInstance.get(`profile/status/${userId}`)
     },
     updateStatus(status) {
-        return axiosInstance.put(`/profile/status`, {status})
+        return axiosInstance.put(`profile/status`, {status})
     },
-    setPhoto(photoFile) {
+    setPhoto(photo) {
         let formData = new FormData();
-        formData.append("image", photoFile);
-        return axiosInstance.put(`/profile/photo`, formData, {
+        formData.append("image", photo);
+        return axiosInstance.put(`profile/photo`, formData, {
             headers: {
                 'Content-Type': "multipart/form-data instead"
             }
         })
+    },
+    saveProfile(profile){
+        return axiosInstance.put(`profile`,profile)
     }
 }
 
@@ -46,10 +49,16 @@ export const authAPI = {
     isAuth() {
         return axiosInstance.get(`auth/me`);
     },
-    logIn(email, password, rememberMe = false) {
-        return axiosInstance.post(`/auth/login`, {email, password, rememberMe})
+    logIn(email, password, rememberMe = false, captcha = null) {
+        return axiosInstance.post(`auth/login`, {email, password, rememberMe,captcha})
     },
     logOut() {
-        return axiosInstance.delete(`/auth/login`);
+        return axiosInstance.delete(`auth/login`);
+    }
+}
+
+export const securityApi = {
+    getCaptca(){
+        return axiosInstance.get(`security/get-captcha-url`);
     }
 }

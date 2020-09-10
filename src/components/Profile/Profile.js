@@ -12,8 +12,12 @@ let Profile = (props) => {
 
         <div className={classes.content}>
 
-            <ProfileInfo profile={props.profile} status = {props.status} updateStatus = {props.updateStatus}/>
-            <PostsContainer/>
+            <ProfileInfo isOwner = {props.isOwner}profile={props.profile} status = {props.status} updateStatus = {props.updateStatus}/>
+            {
+                props.isOwner &&
+                <PostsContainer/>
+            }
+
         </div>
     );
 }

@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 import {Redirect} from "react-router-dom";
 import './login.css';
 
-const Login = ({logIn,isAuth}) => {
+const Login = ({logIn, isAuth,captcha}) => {
     let style = `
     .inner {
   grid-template-areas: 
@@ -22,15 +22,15 @@ display:none
 }
    `
     const onSubmit = formData => {
-        logIn(formData.email,formData.password,formData.rememberMe);
+        logIn(formData.email, formData.password, formData.rememberMe,formData.captcha);
     }
-    if(isAuth){
-        return  <Redirect to='/profile'/>
+    if (isAuth) {
+        return <Redirect to='/profile'/>
     }
     return (
         <div className="loginPage">
             <h1>Login</h1>
-            <LoginForm onSubmit ={onSubmit} />
+            <LoginForm onSubmit={onSubmit} captcha = {captcha}/>
 
             <style>
                 {style}
@@ -40,9 +40,10 @@ display:none
 }
 let mapStateToProps = (state) => (
     {
-    isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captcha: state.auth.captcha
     }
 )
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps, {
     logIn: logInThunkCreator
 })(Login);

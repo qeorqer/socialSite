@@ -35,17 +35,16 @@ class ProfileContainer extends React.Component {
     render() {
 
         return (
-            <Profile {...this.props} />
+            <Profile {...this.props} isOwner={!this.props.match.params.userId} />
         );
 
     }
 }
 
 let mapStateToProps = (state) => ({
-        isLoading: state.usersPage.isLoading,
         profile: state.profilePage.profile,
         status: state.profilePage.status,
-        id: state.auth.id
+        id: state.auth.id,
     }
 )
 export default compose(

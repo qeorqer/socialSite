@@ -4,7 +4,7 @@ import Header from "./components/Header/HeaderContainer";
 import Nav from "./components/Nav/Nav";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
-import {Route, withRouter} from "react-router-dom";
+import {Redirect, Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import {connect} from "react-redux";
 import {initializeThunkCreator} from "./redux/appReducer";
@@ -18,8 +18,16 @@ const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileCo
 
 
 class App extends React.Component {
+    onPromiseError = (event) =>{
+        alert(event.reason)
+    }
+
     componentDidMount() {
         this.props.initializeApp();
+        window.addEventListener("unhandledrejection", this.onPromiseError);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.onPromiseError);
     }
 
     render() {
@@ -30,14 +38,13 @@ class App extends React.Component {
         }
 
         return (
-
-
             <div className="inner">
                 <Header/>
                 <Nav/>
                 <div className="app-content">
                     <Suspense fallback={<Preloader />}>
-                    <Route path='/' exact component={this.props.isAuth ? ProfileContainer : Login}/>
+                    <Route path='/' exact render={() => <Redirect to={'/profile'}/>
+                    }/>
                     <Route path='/profile/:userId?' component={ProfileContainer}/>
                     <Route exact path="/dialogs" component={DialogsContainer}/>
                     <Route path="/news" component={News}/>
@@ -56,7 +63,6 @@ class App extends React.Component {
 let mapStateToProps = (state) => {
     return {
         initialized: state.setApp.initialized,
-        isAuth: state.auth.isAuth
     };
 };
 
